@@ -81,70 +81,56 @@
     hasRowConflictAt: function(rowIndex) {
       var row = this.get(rowIndex);
       var count = 0;
-
       row.forEach(function (item) {
         if (item === 1) {
           count++;
         }
       });
-
       if (count > 1) {
         return true;
       }
-
       return false;
     },
-
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       var matrix = this.rows();
-
       for (var i = 0; i < matrix.length; i++) {
         if (this.hasRowConflictAt(i)) {
           return true;
         }
       }
-
       return false;
     },
-
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      var matrix = this.rows(); // How to get the matrix ???
+      var matrix = this.rows();
       var count = 0;
-
       matrix.forEach(function(item) {
         if (item[colIndex] === 1) {
           count++;
         }
       });
-
       if (count > 1) {
         return true;
       }
-
       return false;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       var matrix = this.rows();
-
       for (var i = 0; i < matrix.length; i++) {
         if (this.hasColConflictAt(i)) {
           return true;
         }
       }
-
       return false;
     },
-
-
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
@@ -152,49 +138,80 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var col = majorDiagonalColumnIndexAtFirstRow;
-      var matrix = this.rows();
+      var row = 0;
       var count = 0;
+      var matrix = this.rows();
+      var n = matrix.length;
 
-      if (col === n) {
-        return false;
-      }
-
-      for (var i = 0; i < matrix.length; i++) {
-        if (matrix[i + 1][col + 1] === 1) {
+      while (col < n && row < n) {
+        if (matrix[row][col] === 1) {
           count++;
         }
+        row++;
+        col++;
       }
 
-      if (n > 1) {
+      if (count > 1) {
         return true;
+      } else {
+        return false;
       }
-
-      return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var matrix = this.rows();
+      var n = matrix.length;
+      //var start = n - (n + ((n - 1) * 1));
+      var start = 1 - n;
+      for (var i = start; i < n; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
-
-
 
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var col = minorDiagonalColumnIndexAtFirstRow;
+      var row = 0;
+      var count = 0;
+      var matrix = this.rows();
+      var n = matrix.length;
+
+      while (col > 0 && row < n) {
+        if (matrix[row][col] === 1) {
+          count++;
+        }
+        row++;
+        col--;
+      }
+
+      if (count > 1) {
+        return true;
+      }
+
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var matrix = this.rows();
+      var n = matrix.length;
+      var start = n + (n - 2);
+      for (var i = 0; i < start; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
-
-
   });
 
   var makeEmptyMatrix = function(n) {
