@@ -181,7 +181,7 @@
           return true;
         }
       }
-      return false; // fixme
+      return false;
     },
     // O(n^3)
 
@@ -227,7 +227,7 @@
           return true;
         }
       }
-      return false; // fixme
+      return false;
     }
     // O(n^3)
 
