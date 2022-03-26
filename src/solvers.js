@@ -25,62 +25,27 @@ window.findNRooksSolution = function (n) {
 
 //return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function (n) {
-  //create a new empty board
   var myBoard = new Board({ n: n });
-  // declare a solution count equal to zero
   var solutionCount = 0;
-  // using backtracking function to get solution
+
   var backtrackingSolution = function (matrix, row) {
-    // base case: when we checked the last row of the matrix
     if (row === n - 1) {
-      // solutionCount++
       solutionCount++;
       return;
     } else {
-      // recusive case:
-      // iterate each col of the matrix
       for (var i = 0; i < n; i++) {
-        // toggle one piece
         matrix.togglePiece(row, i);
-        // if there is no colconflict at this col
         if (!matrix.hasColConflictAt(i)) {
-          // then backtracking the solution
           backtrackingSolution(matrix, row + 1);
         }
-        // else, take off the piece
         matrix.togglePiece(row, i);
       }
     }
   };
-  // invoke backtracking function
   backtrackingSolution(myBoard, 0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
-
-// window.countNRooksSolutions = function(n) {
-//   var board = new Board ({n: n});
-//   //var totalRook = 0;
-//   var solutionCount = 0;
-//   var checkBoard = function(row) {
-//     if (row === n - 1) {
-//       solutionCount++;
-//       return;
-//     }
-//     for (var col = 0; col < n; col++) {
-//       board.togglePiece(row, col);
-//       //totalRook++;
-//       if (!board.hasAnyRooksConflicts()) {
-//         checkBoard(row + 1);
-//       }
-//       board.togglePiece(row, col);
-//       //totalRook--;
-//     }
-//   };
-//   checkBoard(0);
-//   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-//   return solutionCount;
-// };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function (n) {
