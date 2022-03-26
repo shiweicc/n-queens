@@ -114,22 +114,21 @@ window.countNQueensSolutions = function (n) {
 // Helper: O(n!)
 // Solution: O(1)
 
+
 /* Advanced
-Consider the memory usage of your solver:
+- Consider the memory usage of your solver:
 Do you have to allocate and duplicate an entire board?
 We created a new Board but we didn't duplicate it.
 
 Can you re-use the board?
-Yes, we re-used the board on every function.
+Yes, we re-used the board on all the solution functions.
 
-
-Consider what work you can avoid doing:
+- Consider what work you can avoid doing:
 Are you doing any work early in the algorithm that you can tell will be fruitless?
-- At the early time we do the countNrooksolutions, we searched the whole matrix instead of skipping the
-rows that already had pieces.
-- We skipped more methods that can be used in Board.js.
+For the first time attemp of countNRooksSolutions, we searched the whole board instead of skipping the
+rows that already had pieces. We also didn't utilize the methods provided in Board.js at the early time.
 
 How much work do you do on paths which are obviously wrong?
-- We didn't figure it out to use recursion to solve the findsolution problem. We insited in using lots
-of for loops to get result.
+- We didn't think about to use recursion to solve the countNRooksSolutions function. We thought using nested for loops
+might be able to solve the problem.
 */
