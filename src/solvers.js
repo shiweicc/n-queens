@@ -55,9 +55,7 @@ window.findNQueensSolution = function (n) {
   var myBoard = new Board({ n: n });
   var count = 0;
   var solution = myBoard.rows();
-  if (n === 2 || n === 3) {
-    return myBoard.rows();
-  }
+
   var backtrackingSolution = function (row) {
     if (row === n) {
       count ++;
@@ -87,12 +85,7 @@ window.findNQueensSolution = function (n) {
 window.countNQueensSolutions = function (n) {
   var myBoard = new Board({ n: n });
   var count = 0;
-  if (n === 0) {
-    return 1;
-  }
-  if (n === 2 || n === 3) {
-    return 0;
-  }
+
   var backtrackingSolution = function (row) {
     if (row === n) {
       count++;
