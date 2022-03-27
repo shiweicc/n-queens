@@ -145,45 +145,71 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function (majorDiagonalColumnIndexAtFirstRow) {
-      var matrix = this.rows();
       var col = majorDiagonalColumnIndexAtFirstRow;
-      var arr = [];
+      var row = 0;
       var count = 0;
+      var matrix = this.rows();
+      var n = this.get('n');
 
-      for (var i = 0; i < matrix.length - 1; i++) {
-        if (matrix[i][col] === 1) {
-          var index = this._getFirstRowColumnIndexForMajorDiagonalOn(i, col);
-          arr.push(index);
+      while (col < n && row < n) {
+        if (matrix[row][col] === 1) {
+          count++;
         }
+        row++;
+        col++;
       }
-      for (var i = 0; i < matrix.length; i++) {
-        for (var j = 0; j < matrix.length; j++) {
-          var index = this._getFirstRowColumnIndexForMajorDiagonalOn(i, j);
-          var value = matrix[i][j];
-          if (arr.includes(index) && value === 1) {
-            count++;
-          }
-        }
-      }
-      if ((count - arr.length) > 0) {
-        return true;
-      }
-      return false;
+      return count > 1;
+
+      // var matrix = this.rows();
+      // var col = majorDiagonalColumnIndexAtFirstRow;
+      // var arr = [];
+      // var count = 0;
+
+      // for (var i = 0; i < matrix.length - 1; i++) {
+      //   if (matrix[i][col] === 1) {
+      //     var index = this._getFirstRowColumnIndexForMajorDiagonalOn(i, col);
+      //     arr.push(index);
+      //   }
+      // }
+      // for (var i = 0; i < matrix.length; i++) {
+      //   for (var j = 0; j < matrix.length; j++) {
+      //     var index = this._getFirstRowColumnIndexForMajorDiagonalOn(i, j);
+      //     var value = matrix[i][j];
+      //     if (arr.includes(index) && value === 1) {
+      //       count++;
+      //     }
+      //   }
+      // }
+      // if ((count - arr.length) > 0) {
+      //   return true;
+      // }
+      // return false;
+      // O(n^2)
     },
-    // O(n^2)
-
+    // O(n)
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function () {
-      var matrix = this.rows();
-      for (var i = 0; i < matrix.length - 1; i++) {
+      var n = this.get('n');
+      //var start = n - (n + ((n - 1) * 1));
+      var start = 1 - n;
+      for (var i = start; i < n; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
       }
       return false;
+
+      // var matrix = this.rows();
+      // for (var i = 0; i < matrix.length - 1; i++) {
+      //   if (this.hasMajorDiagonalConflictAt(i)) {
+      //     return true;
+      //   }
+      // }
+      // return false;
+      // O(n^3)
     },
-    // O(n^3)
+    // O(n^2)
 
 
     // Minor Diagonals - go from top-right to bottom-left
@@ -192,44 +218,71 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function (minorDiagonalColumnIndexAtFirstRow) {
       var matrix = this.rows();
-      var col = minorDiagonalColumnIndexAtFirstRow;
-      var arr = [];
       var count = 0;
+      var col = minorDiagonalColumnIndexAtFirstRow;
+      var row = 0;
+      var n = this.get('n');
 
-      for (var i = 0; i < matrix.length - 1; i++) {
-        if (matrix[i][col] === 1) {
-          var index = this._getFirstRowColumnIndexForMinorDiagonalOn(i, col);
-          arr.push(index);
+      while (col >= 0 && row < n) {
+        if (matrix[row][col] === 1) {
+          count++;
         }
+        col--;
+        row++;
       }
-      for (var i = 0; i < matrix.length; i++) {
-        for (var j = 0; j < matrix.length; j++) {
-          var index = this._getFirstRowColumnIndexForMinorDiagonalOn(i, j);
-          var value = matrix[i][j];
-          if (arr.includes(index) && value === 1) {
-            count++;
-          }
-        }
-      }
-      if ((count - arr.length) > 0) {
-        return true;
-      }
-      return false;
+      return count > 1;
+
+      // var matrix = this.rows();
+      // var col = minorDiagonalColumnIndexAtFirstRow;
+      // var arr = [];
+      // var count = 0;
+
+      // for (var i = 0; i < matrix.length - 1; i++) {
+      //   if (matrix[i][col] === 1) {
+      //     var index = this._getFirstRowColumnIndexForMinorDiagonalOn(i, col);
+      //     arr.push(index);
+      //   }
+      // }
+      // for (var i = 0; i < matrix.length; i++) {
+      //   for (var j = 0; j < matrix.length; j++) {
+      //     var index = this._getFirstRowColumnIndexForMinorDiagonalOn(i, j);
+      //     var value = matrix[i][j];
+      //     if (arr.includes(index) && value === 1) {
+      //       count++;
+      //     }
+      //   }
+      // }
+      // if ((count - arr.length) > 0) {
+      //   return true;
+      // }
+      // return false;
+      // O(n^2)
     },
-    // O(n^2)
+    // O(n)
 
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function () {
       var matrix = this.rows();
-      for (var i = 0; i < matrix.length; i++) {
+      var n = matrix.length;
+      var start = n + (n - 2);
+      for (var i = 0; i < start; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
       }
       return false;
+
+      // var matrix = this.rows();
+      // for (var i = 0; i < matrix.length; i++) {
+      //   if (this.hasMinorDiagonalConflictAt(i)) {
+      //     return true;
+      //   }
+      // }
+      // return false;
+      // O(n^3)
     }
-    // O(n^3)
+    // O(n^2)
 
     /*--------------------  End of Helper Functions  ---------------------*/
   });
